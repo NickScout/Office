@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +66,14 @@ public class OfficeApplication {
 
             positionDAO.saveAll(positions);
 
+        }
+
+        if(!employeeDAO.findById(new Long(1)).isPresent()){
+            Employee NickScout = new Employee();
+            NickScout.setName("Nick Scout");
+            NickScout.setBirth(Date.valueOf("1997-12-08"));
+            NickScout.setPosition(positionDAO.findById(new Long(1)).get());
+            employeeDAO.save(NickScout);
         }
 
     }

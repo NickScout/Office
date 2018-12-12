@@ -1,5 +1,6 @@
 package com.office.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.*;
@@ -16,6 +17,7 @@ public class Position extends IdHolder {
     private String description;
     private double salary;
     @OneToMany(mappedBy = "position")
+    @JsonIgnore
     private Set<Employee> employees;
 
 }
