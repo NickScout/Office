@@ -16,20 +16,24 @@ public abstract class AController <T>{
     @Autowired
     private CrudRepository<T, Long> dao;
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/")
     public void save(@RequestBody T obj){
             dao.save(obj);
     }
-    @RequestMapping(value = "/find")
-    public T find(@RequestParam("id") long id) throws Exception {
+    @RequestMapping(value = "/")
+    public T find(@RequestParam ("id") long id) throws Exception {
         return (T) dao.findById(id).orElseThrow(() ->new Exception("Entity not found!"));
     }
-//    @RequestMapping(value = "/findAllByIds")
-//    public Iterable<T> findAllByIds(@("ids")ArrayList<Long> ids) throws Exception {
-//        return dao.findAllById(ids);
-//    }
-    @DeleteMapping(value = "/delete")
+    @RequestMapping(value = "/")
+    public Iterable<T> findAllByIds(@RequestParam("ids")ArrayList<Long> ids) {
+        return dao.findAllById(ids);
+    }
+    @RequestMapping(value = "/")
+    public Iterable<T> findAll() {
+        return dao.findAll();
+    }
+    @DeleteMapping(value = "/")
     public void delete(@RequestBody T obj) { dao.delete(obj); }
-    @DeleteMapping(value = "/deleteById")
+    @DeleteMapping(value = "/")
     public void deleteById(@RequestParam("id") long id) { dao.deleteById(id); }
 }

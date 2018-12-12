@@ -4,7 +4,6 @@ import com.office.entity.Employee;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
-@RequestMapping("/api/employees")
+@RestController("/api/employees/")
 
-public class EmployeeController extends AController<Employee>  { }
+public class EmployeeController extends AController<Employee> { }
