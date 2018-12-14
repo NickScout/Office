@@ -18,7 +18,7 @@ public abstract class AController <T>{
     protected CrudRepository<T, Long> dao;
 
     @PostMapping
-    public void save(@RequestBody T obj) throws NotFoundException {
+    public void save(@RequestBody T obj) {
         dao.save(obj);
     }
     @GetMapping(value = "/{id}")
@@ -37,3 +37,4 @@ public abstract class AController <T>{
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable long id) { dao.deleteById(id); }
 }
+
