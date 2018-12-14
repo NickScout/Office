@@ -1,10 +1,11 @@
 package com.office.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.*;
+import com.office.controller.httpexception.*;
 
 import java.util.ArrayList;
 
@@ -14,26 +15,25 @@ public abstract class AController <T>{
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
-    private CrudRepository<T, Long> dao;
+    protected CrudRepository<T, Long> dao;
 
-    @PostMapping(value = "/")
-    public void save(@RequestBody T obj){
-            dao.save(obj);
+    @PostMapping
+    public void save(@RequestBody T obj) throws NotFoundException {
+        dao.save(obj);
     }
-    @RequestMapping(value = "/")
-    public T find(@RequestParam ("id") long id) throws Exception {
-        return (T) dao.findById(id).orElseThrow(() ->new Exception("Entity not found!"));
+    @GetMapping(value = "/{id}")
+    public T find(@PathVariable("id") long id) throws NotFoundException {
+
+        return (T) dao.findById(id).orElseThrow(() -> new NotFoundException());
     }
-    @RequestMapping(value = "/")
-    public Iterable<T> findAllByIds(@RequestParam("ids")ArrayList<Long> ids) {
+    @RequestMapping(value = "/multiple/{ids}")
+    public Iterable<T> findAllByIds(@PathVariable("ids") ArrayList<Long> ids) {
         return dao.findAllById(ids);
     }
-    @RequestMapping(value = "/")
+    @GetMapping()
     public Iterable<T> findAll() {
         return dao.findAll();
     }
-    @DeleteMapping(value = "/")
-    public void delete(@RequestBody T obj) { dao.delete(obj); }
-    @DeleteMapping(value = "/")
-    public void deleteById(@RequestParam("id") long id) { dao.deleteById(id); }
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable long id) { dao.deleteById(id); }
 }
