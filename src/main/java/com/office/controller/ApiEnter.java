@@ -1,16 +1,15 @@
 package com.office.controller;
 
 import com.office.entity.Employee;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ApiEnter {
-    @PostMapping("/login")
-    public void loign(@RequestBody Employee employee) {
-        System.out.println(employee.toString());
 
+    @RequestMapping("/login")
+    public String loign(Model model) {
+        model.addAttribute("employee", new Employee());
+        return "redirect:/index";
     }
 }
