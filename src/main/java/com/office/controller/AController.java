@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 @EnableJpaRepositories(basePackages = "com.office")
 @RestController
+
 public abstract class AController <T>{
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -23,7 +24,6 @@ public abstract class AController <T>{
     }
     @GetMapping(value = "/{id}")
     public T find(@PathVariable("id") long id) throws NotFoundException {
-
         return (T) dao.findById(id).orElseThrow(() -> new NotFoundException());
     }
     @RequestMapping(value = "/multiple/{ids}")

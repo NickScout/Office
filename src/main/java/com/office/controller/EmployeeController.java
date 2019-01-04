@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/employees")
 
 public class EmployeeController extends AController<Employee> { }
